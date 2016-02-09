@@ -10,6 +10,6 @@ public class Account
 	
 	public Account(Person owner)
 	{
-		
+		accountOwner = owner;
 	}
 }
