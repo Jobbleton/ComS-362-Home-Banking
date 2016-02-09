@@ -20,6 +20,12 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import java.awt.FlowLayout;
+import java.awt.BorderLayout;
+import javax.swing.JScrollPane;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.MatteBorder;
+import javax.swing.border.CompoundBorder;
 
 public class HomeBankingView extends JFrame
 {
@@ -48,22 +54,26 @@ public class HomeBankingView extends JFrame
 	}
 
 	//Create the frame.
-	public HomeBankingView() {
+	public HomeBankingView()
+	{
 		//block for main window
 		setTitle("ComS 362 Home Banking");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 1280, 720);
 		mainContentPane = new JPanel();
-		mainContentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		mainContentPane.setBorder(new EmptyBorder(3,3,3,3));
 		setContentPane(mainContentPane);
-		mainContentPane.setLayout(null);
+		mainContentPane.setLayout(new BorderLayout(0, 0));
 		
-		//image panel for facemapped image
+		//main internal panel
 		JPanel largeInternalPanel = new JPanel();
+		largeInternalPanel.setBorder(new CompoundBorder());
 		largeInternalPanel.setBackground(SystemColor.controlHighlight);
-		largeInternalPanel.setBounds(10, 11, 1244, 659);
 		mainContentPane.add(largeInternalPanel);
-		largeInternalPanel.setLayout(null);
+		largeInternalPanel.setLayout(new BorderLayout(0, 0));
+		
+		JScrollPane scrollPane = new JScrollPane();
+		largeInternalPanel.add(scrollPane);
 	}
 }
 
