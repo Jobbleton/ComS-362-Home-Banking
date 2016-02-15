@@ -17,9 +17,13 @@ public class HomeBankingController
 	
 	HomeBankingController()
 	{
+		peopleList = new ArrayList<Person>();
+		childrenList = new ArrayList<Child>();
+		bankList = new ArrayList<Bank>();
+		addPerson(new Person("James", "Test", "1234"));
 		try
 		{	
-			File inputFile = new File("initialization.txt");
+			File inputFile = new File("src/initialization.txt");
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(inputFile);
@@ -73,6 +77,21 @@ public class HomeBankingController
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	public ArrayList<Person> getPeopleList()
+	{
+		return peopleList;
+	}
+	
+	public ArrayList<Child> getChildrenList()
+	{
+		return childrenList;
+	}
+	
+	public ArrayList<Bank> getBankList()
+	{
+		return bankList;
 	}
 	
 	public boolean addPerson(Person p)

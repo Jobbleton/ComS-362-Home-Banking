@@ -27,6 +27,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.CompoundBorder;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 
 public class HomeBankingView extends JFrame
 {
@@ -40,6 +41,7 @@ public class HomeBankingView extends JFrame
 	private JTextField txtAddBank;
 	private JTextField txtRemoveBank;
 
+	private static HomeBankingController mainController;
 	//Launch the application.
 	public static void main(String[] args)
 	{
@@ -49,6 +51,7 @@ public class HomeBankingView extends JFrame
 			{
 				try
 				{
+					mainController = new HomeBankingController();
 					HomeBankingView frame = new HomeBankingView();
 					frame.setVisible(true);
 				}
@@ -62,9 +65,7 @@ public class HomeBankingView extends JFrame
 
 	//Create the frame.
 	public HomeBankingView()
-	{
-		HomeBankingController mainController = new HomeBankingController();
-		
+	{	
 		//block for main window
 		setTitle("ComS 362 Home Banking");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -157,9 +158,17 @@ public class HomeBankingView extends JFrame
 		btnRemoveBank.setBounds(201, 165, 89, 23);
 		largeInternalPanel.add(btnRemoveBank);
 		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(300, 11, 227, 175);
-		largeInternalPanel.add(scrollPane_1);
+		ArrayList<String> peopleNames = new ArrayList<String>();
+		int counter = mainController.getPeopleList().size();
+		for(int j = 0; j < counter; j++)
+		{
+			peopleNames.add(mainController.getPeopleList().get(j).getFullName());
+		}
+		JList tempList = new JList(peopleNames.toArray());
+        tempList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		JScrollPane peopleList = new JScrollPane(tempList);
+		peopleList.setBounds(300, 11, 227, 175);
+		largeInternalPanel.add(peopleList);
 	}
 }
 
