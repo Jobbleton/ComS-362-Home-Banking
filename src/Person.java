@@ -23,4 +23,9 @@ public class Person
 	{
 		return firstName + " " + lastName;
 	}
+	
+	public String getIdentifier()
+	{
+		return identifier;
+	}
 }

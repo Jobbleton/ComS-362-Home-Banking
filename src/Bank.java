@@ -15,6 +15,11 @@ public class Bank
 		nameOfBank = name;
 	}
 	
+	public String getName()
+	{
+		return nameOfBank;
+	}
+	
 	public boolean addAccount(Account toAdd)
 	{
 		//TODO: ERROR HANDLING

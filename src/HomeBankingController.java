@@ -25,7 +25,9 @@ public class HomeBankingController
 			Document doc = dBuilder.parse(inputFile);
 			doc.getDocumentElement().normalize();
 			
+			//DEBUG
 			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+			//temporary
 			NodeList nList = doc.getElementsByTagName("student");
 			System.out.println("----------------------------");
 			
@@ -71,5 +73,62 @@ public class HomeBankingController
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	public boolean addPerson(Person p)
+	{
+		peopleList.add(p);
+		return true;
+	}
+	
+	public boolean removePerson(String id)
+	{
+		for(int i = 0; i < peopleList.size(); i++)
+		{
+			if(peopleList.get(i).getIdentifier().equals(id))
+			{
+				peopleList.remove(i);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean addChild(Child p)
+	{
+		childrenList.add(p);
+		return true;
+	}
+	
+	public boolean removeChildren(String id)
+	{
+		for(int i = 0; i < childrenList.size(); i++)
+		{
+			if(childrenList.get(i).getIdentifier().equals(id))
+			{
+				childrenList.remove(i);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean addBank(Bank p)
+	{
+		bankList.add(p);
+		return true;
+	}
+	
+	public boolean removeBank(String id)
+	{
+		for(int i = 0; i < bankList.size(); i++)
+		{
+			if(bankList.get(i).getName().equals(id))
+			{
+				bankList.remove(i);
+				return true;
+			}
+		}
+		return false;
 	}
 }
