@@ -100,6 +100,9 @@ public class HomeBankingView extends JFrame
 		JButton btnAddPerson = new JButton("Add Person");
 		btnAddPerson.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+				JList tempList = new JList(peopleNames.toArray());
+				peopleList.setViewportView(tempList);
 			}
 		});
 		btnAddPerson.setBounds(201, 10, 89, 23);
@@ -138,10 +141,24 @@ public class HomeBankingView extends JFrame
 		largeInternalPanel.add(txtRemoveChild);
 		
 		JButton btnAddChild = new JButton("Add Child");
+		btnAddChild.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				JList tempList = new JList(peopleNames.toArray());
+				peopleList.setViewportView(tempList);
+			}
+		});
 		btnAddChild.setBounds(201, 72, 89, 23);
 		largeInternalPanel.add(btnAddChild);
 		
 		JButton btnDeleteChild = new JButton("Delete Child");
+		btnDeleteChild.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				JList tempList = new JList(peopleNames.toArray());
+				peopleList.setViewportView(tempList);
+			}
+		});
 		btnDeleteChild.setBounds(201, 103, 89, 23);
 		largeInternalPanel.add(btnDeleteChild);
 		
@@ -158,10 +175,24 @@ public class HomeBankingView extends JFrame
 		largeInternalPanel.add(txtRemoveBank);
 		
 		JButton btnAddBank = new JButton("Add Bank");
+		btnAddBank.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				JList tempList = new JList(peopleNames.toArray());
+				peopleList.setViewportView(tempList);
+			}
+		});
 		btnAddBank.setBounds(201, 134, 89, 23);
 		largeInternalPanel.add(btnAddBank);
 		
 		JButton btnRemoveBank = new JButton("Delete Bank");
+		btnRemoveBank.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				JList tempList = new JList(peopleNames.toArray());
+				peopleList.setViewportView(tempList);
+			}
+		});
 		btnRemoveBank.setBounds(201, 165, 89, 23);
 		largeInternalPanel.add(btnRemoveBank);
 		
