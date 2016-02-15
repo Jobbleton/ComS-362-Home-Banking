@@ -32,7 +32,6 @@ import javax.swing.ListSelectionModel;
 public class HomeBankingView extends JFrame
 {
 	private static final long serialVersionUID = 1L;
-	Image storedImage;
 	private JPanel mainContentPane;
 	private JTextField txtAddPerson;
 	private JTextField txtRemovePerson;
@@ -40,6 +39,8 @@ public class HomeBankingView extends JFrame
 	private JTextField txtRemoveChild;
 	private JTextField txtAddBank;
 	private JTextField txtRemoveBank;
+	private JScrollPane peopleList;
+	private ArrayList<String> peopleNames;
 
 	private static HomeBankingController mainController;
 	//Launch the application.
@@ -113,6 +114,12 @@ public class HomeBankingView extends JFrame
 		JButton btnRemovePerson = new JButton("Delete Person");
 		btnRemovePerson.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//DEBUG
+				System.out.println("ACTION PERFORMED");
+				peopleNames.add("TEST");
+				
+				JList tempList = new JList(peopleNames.toArray());
+				peopleList.setViewportView(tempList);
 			}
 		});
 		btnRemovePerson.setBounds(201, 41, 89, 23);
@@ -158,7 +165,7 @@ public class HomeBankingView extends JFrame
 		btnRemoveBank.setBounds(201, 165, 89, 23);
 		largeInternalPanel.add(btnRemoveBank);
 		
-		ArrayList<String> peopleNames = new ArrayList<String>();
+		peopleNames = new ArrayList<String>();
 		int counter = mainController.getPeopleList().size();
 		for(int j = 0; j < counter; j++)
 		{
@@ -166,9 +173,13 @@ public class HomeBankingView extends JFrame
 		}
 		JList tempList = new JList(peopleNames.toArray());
         tempList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		JScrollPane peopleList = new JScrollPane(tempList);
+		peopleList = new JScrollPane(tempList);
 		peopleList.setBounds(300, 11, 227, 175);
 		largeInternalPanel.add(peopleList);
+		
+		JButton btnListPerson = new JButton("List Person");
+		btnListPerson.setBounds(300, 197, 89, 23);
+		largeInternalPanel.add(btnListPerson);
 	}
 }
 
