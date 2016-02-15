@@ -34,11 +34,11 @@ public class HomeBankingView extends JFrame
 	Image storedImage;
 	private JPanel mainContentPane;
 	private JTextField txtAddPerson;
-	private JTextField txtPersonToRemove;
-	private JTextField txtChildToAdd;
-	private JTextField txtChildToRemove;
-	private JTextField txtBankToAdd;
-	private JTextField txtBankToRemove;
+	private JTextField txtRemovePerson;
+	private JTextField txtAddChild;
+	private JTextField txtRemoveChild;
+	private JTextField txtAddBank;
+	private JTextField txtRemoveBank;
 
 	//Launch the application.
 	public static void main(String[] args)
@@ -95,67 +95,67 @@ public class HomeBankingView extends JFrame
 		largeInternalPanel.add(txtAddPerson);
 		txtAddPerson.setColumns(10);
 		
-		JButton btnNewButton = new JButton("Add Person");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnAddPerson = new JButton("Add Person");
+		btnAddPerson.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnNewButton.setBounds(201, 10, 89, 23);
-		largeInternalPanel.add(btnNewButton);
+		btnAddPerson.setBounds(201, 10, 89, 23);
+		largeInternalPanel.add(btnAddPerson);
 		
-		txtPersonToRemove = new JTextField();
-		txtPersonToRemove.setText("person to remove by id");
-		txtPersonToRemove.setColumns(10);
-		txtPersonToRemove.setBounds(10, 42, 181, 20);
-		largeInternalPanel.add(txtPersonToRemove);
+		txtRemovePerson = new JTextField();
+		txtRemovePerson.setText("person to remove by id");
+		txtRemovePerson.setColumns(10);
+		txtRemovePerson.setBounds(10, 42, 181, 20);
+		largeInternalPanel.add(txtRemovePerson);
 		
-		JButton button = new JButton("Delete Person");
-		button.addActionListener(new ActionListener() {
+		JButton btnRemovePerson = new JButton("Delete Person");
+		btnRemovePerson.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		button.setBounds(201, 41, 89, 23);
-		largeInternalPanel.add(button);
+		btnRemovePerson.setBounds(201, 41, 89, 23);
+		largeInternalPanel.add(btnRemovePerson);
 		
-		txtChildToAdd = new JTextField();
-		txtChildToAdd.setText("child to add (first, second, id)");
-		txtChildToAdd.setColumns(10);
-		txtChildToAdd.setBounds(10, 73, 181, 20);
-		largeInternalPanel.add(txtChildToAdd);
+		txtAddChild = new JTextField();
+		txtAddChild.setText("child to add (first, second, id)");
+		txtAddChild.setColumns(10);
+		txtAddChild.setBounds(10, 73, 181, 20);
+		largeInternalPanel.add(txtAddChild);
 		
-		txtChildToRemove = new JTextField();
-		txtChildToRemove.setText("child to remove by id");
-		txtChildToRemove.setColumns(10);
-		txtChildToRemove.setBounds(10, 104, 181, 20);
-		largeInternalPanel.add(txtChildToRemove);
+		txtRemoveChild = new JTextField();
+		txtRemoveChild.setText("child to remove by id");
+		txtRemoveChild.setColumns(10);
+		txtRemoveChild.setBounds(10, 104, 181, 20);
+		largeInternalPanel.add(txtRemoveChild);
 		
-		JButton button_1 = new JButton("Add Person");
-		button_1.setBounds(201, 72, 89, 23);
-		largeInternalPanel.add(button_1);
+		JButton btnAddChild = new JButton("Add Child");
+		btnAddChild.setBounds(201, 72, 89, 23);
+		largeInternalPanel.add(btnAddChild);
 		
-		JButton button_2 = new JButton("Delete Person");
-		button_2.setBounds(201, 103, 89, 23);
-		largeInternalPanel.add(button_2);
+		JButton btnDeleteChild = new JButton("Delete Child");
+		btnDeleteChild.setBounds(201, 103, 89, 23);
+		largeInternalPanel.add(btnDeleteChild);
 		
-		txtBankToAdd = new JTextField();
-		txtBankToAdd.setText("bank to add (name)");
-		txtBankToAdd.setColumns(10);
-		txtBankToAdd.setBounds(10, 135, 181, 20);
-		largeInternalPanel.add(txtBankToAdd);
+		txtAddBank = new JTextField();
+		txtAddBank.setText("bank to add (name)");
+		txtAddBank.setColumns(10);
+		txtAddBank.setBounds(10, 135, 181, 20);
+		largeInternalPanel.add(txtAddBank);
 		
-		txtBankToRemove = new JTextField();
-		txtBankToRemove.setText("bank to remove by name");
-		txtBankToRemove.setColumns(10);
-		txtBankToRemove.setBounds(10, 166, 181, 20);
-		largeInternalPanel.add(txtBankToRemove);
+		txtRemoveBank = new JTextField();
+		txtRemoveBank.setText("bank to remove by name");
+		txtRemoveBank.setColumns(10);
+		txtRemoveBank.setBounds(10, 166, 181, 20);
+		largeInternalPanel.add(txtRemoveBank);
 		
-		JButton button_3 = new JButton("Add Person");
-		button_3.setBounds(201, 134, 89, 23);
-		largeInternalPanel.add(button_3);
+		JButton btnAddBank = new JButton("Add Bank");
+		btnAddBank.setBounds(201, 134, 89, 23);
+		largeInternalPanel.add(btnAddBank);
 		
-		JButton button_4 = new JButton("Delete Person");
-		button_4.setBounds(201, 165, 89, 23);
-		largeInternalPanel.add(button_4);
+		JButton btnRemoveBank = new JButton("Delete Bank");
+		btnRemoveBank.setBounds(201, 165, 89, 23);
+		largeInternalPanel.add(btnRemoveBank);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(300, 11, 227, 175);
