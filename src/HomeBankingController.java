@@ -20,7 +20,10 @@ public class HomeBankingController
 		peopleList = new ArrayList<Person>();
 		childrenList = new ArrayList<Child>();
 		bankList = new ArrayList<Bank>();
+		
+		//DEBUG
 		addPerson(new Person("James", "Test", "1234"));
+		
 		try
 		{	
 			File inputFile = new File("src/initialization.txt");
