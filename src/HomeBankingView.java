@@ -28,6 +28,7 @@ import javax.swing.border.MatteBorder;
 import javax.swing.border.CompoundBorder;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import java.awt.Component;
 
 public class HomeBankingView extends JFrame
 {
@@ -40,7 +41,11 @@ public class HomeBankingView extends JFrame
 	private JTextField txtAddBank;
 	private JTextField txtRemoveBank;
 	private JScrollPane peopleList;
+	private JScrollPane childrenList;
+	private JScrollPane bankList;
 	private ArrayList<String> peopleNames;
+	private ArrayList<String> childrenNames;
+	private ArrayList<String> bankNames;
 
 	private static HomeBankingController mainController;
 	//Launch the application.
@@ -92,7 +97,7 @@ public class HomeBankingView extends JFrame
 		largeInternalPanel.setLayout(null);
 		
 		txtAddPerson = new JTextField();
-		txtAddPerson.setText("person to add (first, second, id)");
+		txtAddPerson.setText("person to add \"first last id\"");
 		txtAddPerson.setBounds(10, 11, 181, 20);
 		largeInternalPanel.add(txtAddPerson);
 		txtAddPerson.setColumns(10);
@@ -100,6 +105,24 @@ public class HomeBankingView extends JFrame
 		JButton btnAddPerson = new JButton("Add Person");
 		btnAddPerson.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				//DEBUG
+				System.out.println("ACTION PERFORMED");
+				//peopleNames.add("TEST");
+				
+				
+				String toAdd = txtAddPerson.getText();
+				String[] tokenizedAdd = toAdd.split("\\s+");
+				if(tokenizedAdd.length == 3)
+				{
+					mainController.addPerson(new Person(tokenizedAdd[0],tokenizedAdd[1],tokenizedAdd[2]));
+				}
+				
+				peopleNames = new ArrayList<String>();
+				int counter = mainController.getPeopleList().size();
+				for(int j = 0; j < counter; j++)
+				{
+					peopleNames.add(mainController.getPeopleList().get(j).getFullName());
+				}
 				
 				JList tempList = new JList(peopleNames.toArray());
 				peopleList.setViewportView(tempList);
@@ -117,9 +140,6 @@ public class HomeBankingView extends JFrame
 		JButton btnRemovePerson = new JButton("Delete Person");
 		btnRemovePerson.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//DEBUG
-				System.out.println("ACTION PERFORMED");
-				peopleNames.add("TEST");
 				
 				JList tempList = new JList(peopleNames.toArray());
 				peopleList.setViewportView(tempList);
@@ -143,9 +163,28 @@ public class HomeBankingView extends JFrame
 		JButton btnAddChild = new JButton("Add Child");
 		btnAddChild.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				//DEBUG
+				System.out.println("ACTION PERFORMED");
+				//peopleNames.add("TEST");
 				
-				JList tempList = new JList(peopleNames.toArray());
-				peopleList.setViewportView(tempList);
+				
+				String toAdd = txtAddChild.getText();
+				String[] tokenizedAdd = toAdd.split("\\s+");
+				if(tokenizedAdd.length == 3)
+				{
+					mainController.addChild(new Child(tokenizedAdd[0],tokenizedAdd[1],tokenizedAdd[2]));
+				}
+				
+				childrenNames = new ArrayList<String>();
+				int counter = mainController.getPeopleList().size();
+				for(int j = 0; j < counter; j++)
+				{
+					childrenNames.add(mainController.getChildrenList().get(j).getFullName());
+				}
+				
+				JList tempList = new JList(childrenNames.toArray());
+
+				childrenList.setViewportView(tempList);
 			}
 		});
 		btnAddChild.setBounds(201, 72, 89, 23);
@@ -197,20 +236,40 @@ public class HomeBankingView extends JFrame
 		largeInternalPanel.add(btnRemoveBank);
 		
 		peopleNames = new ArrayList<String>();
-		int counter = mainController.getPeopleList().size();
-		for(int j = 0; j < counter; j++)
+		int counter1 = mainController.getPeopleList().size();
+		for(int j = 0; j < counter1; j++)
 		{
 			peopleNames.add(mainController.getPeopleList().get(j).getFullName());
 		}
-		JList tempList = new JList(peopleNames.toArray());
-        tempList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		peopleList = new JScrollPane(tempList);
+		JList tempPeopleList = new JList(peopleNames.toArray());
+        tempPeopleList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		peopleList = new JScrollPane(tempPeopleList);
 		peopleList.setBounds(300, 11, 227, 175);
 		largeInternalPanel.add(peopleList);
 		
-		JButton btnListPerson = new JButton("List Person");
-		btnListPerson.setBounds(300, 197, 89, 23);
-		largeInternalPanel.add(btnListPerson);
+		childrenNames = new ArrayList<String>();
+		int counter2 = mainController.getChildrenList().size();
+		for(int j = 0; j < counter2; j++)
+		{
+			peopleNames.add(mainController.getChildrenList().get(j).getFullName());
+		}
+		JList tempChildrenList = new JList(childrenNames.toArray());
+        tempChildrenList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		childrenList = new JScrollPane(tempChildrenList);
+		childrenList.setBounds(547, 11, 227, 175);
+		largeInternalPanel.add(childrenList);
+		
+		peopleNames = new ArrayList<String>();
+		int counter3 = mainController.getBankList().size();
+		for(int j = 0; j < counter3; j++)
+		{
+			bankNames.add(mainController.getBankList().get(j).getName());
+		}
+		JList tempBankList = new JList(bankNames.toArray());
+        tempBankList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		bankList = new JScrollPane(tempBankList);
+		bankList.setBounds(784, 11, 227, 175);
+		largeInternalPanel.add(bankList);
 	}
 }
 
