@@ -140,6 +140,26 @@ public class HomeBankingView extends JFrame
 		JButton btnRemovePerson = new JButton("Delete Person");
 		btnRemovePerson.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String toDel = txtRemovePerson.getText();
+				String[] tokenizedDel = toDel.split("\\s+");
+				if(tokenizedDel.length == 1)
+				{
+					if(!mainController.removePerson(tokenizedDel[0]))
+					{
+						txtRemovePerson.setText("Child not found by id given");
+					}
+				}
+				else
+				{
+					txtRemovePerson.setText("Format: \"id\"");
+				}
+				
+				peopleNames = new ArrayList<String>();
+				int counter = mainController.getPeopleList().size();
+				for(int j = 0; j < counter; j++)
+				{
+					peopleNames.add(mainController.getPeopleList().get(j).getFullName());
+				}
 				
 				JList tempList = new JList(peopleNames.toArray());
 				peopleList.setViewportView(tempList);
@@ -193,9 +213,30 @@ public class HomeBankingView extends JFrame
 		JButton btnDeleteChild = new JButton("Delete Child");
 		btnDeleteChild.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				String toDel = txtRemoveChild.getText();
+				String[] tokenizedDel = toDel.split("\\s+");
+				if(tokenizedDel.length == 1)
+				{
+					if(!mainController.removeChild(tokenizedDel[0]))
+					{
+						txtRemoveChild.setText("Child not found by id given");
+					}
+				}
+				else
+				{
+					txtRemoveChild.setText("Format: \"id\"");
+				}
 				
-				JList tempList = new JList(peopleNames.toArray());
-				peopleList.setViewportView(tempList);
+				childrenNames = new ArrayList<String>();
+				int counter = mainController.getChildrenList().size();
+				for(int j = 0; j < counter; j++)
+				{
+					childrenNames.add(mainController.getChildrenList().get(j).getFullName());
+				}
+				
+				JList tempList = new JList(childrenNames.toArray());
+
+				childrenList.setViewportView(tempList);
 			}
 		});
 		btnDeleteChild.setBounds(201, 103, 89, 23);
@@ -249,9 +290,30 @@ public class HomeBankingView extends JFrame
 		JButton btnRemoveBank = new JButton("Delete Bank");
 		btnRemoveBank.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				String toDel = txtRemoveBank.getText();
+				String[] tokenizedDel = toDel.split("\\s+");
+				if(tokenizedDel.length == 1)
+				{
+					if(!mainController.removeBank(tokenizedDel[0]))
+					{
+						txtRemoveBank.setText("Bank not found by name given");
+					}
+				}
+				else
+				{
+					txtRemoveBank.setText("Format: \"name\"");
+				}
 				
-				JList tempList = new JList(peopleNames.toArray());
-				peopleList.setViewportView(tempList);
+				bankNames = new ArrayList<String>();
+				int counter = mainController.getBankList().size();
+				for(int j = 0; j < counter; j++)
+				{
+					bankNames.add(mainController.getBankList().get(j).getName());
+				}
+				
+				JList tempList = new JList(bankNames.toArray());
+
+				bankList.setViewportView(tempList);
 			}
 		});
 		btnRemoveBank.setBounds(201, 165, 89, 23);

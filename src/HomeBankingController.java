@@ -122,7 +122,7 @@ public class HomeBankingController
 		return true;
 	}
 	
-	public boolean removeChildren(String id)
+	public boolean removeChild(String id)
 	{
 		for(int i = 0; i < childrenList.size(); i++)
 		{
