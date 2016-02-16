@@ -176,7 +176,7 @@ public class HomeBankingView extends JFrame
 				}
 				
 				childrenNames = new ArrayList<String>();
-				int counter = mainController.getPeopleList().size();
+				int counter = mainController.getChildrenList().size();
 				for(int j = 0; j < counter; j++)
 				{
 					childrenNames.add(mainController.getChildrenList().get(j).getFullName());
@@ -216,9 +216,31 @@ public class HomeBankingView extends JFrame
 		JButton btnAddBank = new JButton("Add Bank");
 		btnAddBank.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				//DEBUG
+				System.out.println("ACTION PERFORMED");
+				//peopleNames.add("TEST");
 				
-				JList tempList = new JList(peopleNames.toArray());
-				peopleList.setViewportView(tempList);
+				
+				String toAdd = txtAddBank.getText();
+				String[] tokenizedAdd = toAdd.split("\\s+");
+				if(tokenizedAdd.length == 1)
+				{
+					mainController.addBank(new Bank(tokenizedAdd[0]));
+				}
+				
+				//DEBUG
+				System.out.println(tokenizedAdd.length + " " + tokenizedAdd[0]);
+				
+				bankNames = new ArrayList<String>();
+				int counter = mainController.getBankList().size();
+				for(int j = 0; j < counter; j++)
+				{
+					bankNames.add(mainController.getBankList().get(j).getName());
+				}
+				
+				JList tempList = new JList(bankNames.toArray());
+
+				bankList.setViewportView(tempList);
 			}
 		});
 		btnAddBank.setBounds(201, 134, 89, 23);
@@ -259,7 +281,7 @@ public class HomeBankingView extends JFrame
 		childrenList.setBounds(547, 11, 227, 175);
 		largeInternalPanel.add(childrenList);
 		
-		peopleNames = new ArrayList<String>();
+		bankNames = new ArrayList<String>();
 		int counter3 = mainController.getBankList().size();
 		for(int j = 0; j < counter3; j++)
 		{
