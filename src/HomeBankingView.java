@@ -145,9 +145,9 @@ public class HomeBankingView extends JFrame
 				if(tokenizedDel.length == 1)
 				{
 					if(!mainController.removePerson(tokenizedDel[0]))
-					{
-						txtRemovePerson.setText("Child not found by id given");
-					}
+						txtRemovePerson.setText("Person not found by id given");
+					else
+						txtRemovePerson.setText("Success!");
 				}
 				else
 				{
@@ -221,6 +221,8 @@ public class HomeBankingView extends JFrame
 					{
 						txtRemoveChild.setText("Child not found by id given");
 					}
+					else
+						txtRemoveChild.setText("Success!");
 				}
 				else
 				{
@@ -298,6 +300,8 @@ public class HomeBankingView extends JFrame
 					{
 						txtRemoveBank.setText("Bank not found by name given");
 					}
+					else
+						txtRemoveBank.setText("Success!");
 				}
 				else
 				{
