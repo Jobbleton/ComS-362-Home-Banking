@@ -8,11 +8,13 @@ public class Bank
 	public Bank()
 	{
 		nameOfBank = "default name";
+		accounts = new ArrayList<Account>();
 	}
 	
 	public Bank(String name)
 	{
 		nameOfBank = name;
+		accounts = new ArrayList<Account>();
 	}
 	
 	public String getName()
@@ -25,5 +27,23 @@ public class Bank
 		//TODO: ERROR HANDLING
 		accounts.add(toAdd);
 		return true;
+	}
+	
+	public boolean removeAccount(Account toRemove)
+	{
+		for(Account a : accounts)
+		{
+			if(a.equals(toRemove))
+			{
+				accounts.remove(a);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public ArrayList<Account> getAccounts()
+	{
+		return accounts;
 	}
 }

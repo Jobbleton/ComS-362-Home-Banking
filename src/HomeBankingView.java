@@ -43,11 +43,15 @@ public class HomeBankingView extends JFrame
 	private JScrollPane peopleList;
 	private JScrollPane childrenList;
 	private JScrollPane bankList;
+	private JScrollPane accountList;
 	private ArrayList<String> peopleNames;
 	private ArrayList<String> childrenNames;
 	private ArrayList<String> bankNames;
+	private ArrayList<String> accountNames;
 
 	private static HomeBankingController mainController;
+	private JTextField txtAddAccount;
+	private JTextField txtRemoveAccount;
 	//Launch the application.
 	public static void main(String[] args)
 	{
@@ -128,7 +132,7 @@ public class HomeBankingView extends JFrame
 				peopleList.setViewportView(tempList);
 			}
 		});
-		btnAddPerson.setBounds(201, 10, 89, 23);
+		btnAddPerson.setBounds(201, 10, 138, 23);
 		largeInternalPanel.add(btnAddPerson);
 		
 		txtRemovePerson = new JTextField();
@@ -165,7 +169,7 @@ public class HomeBankingView extends JFrame
 				peopleList.setViewportView(tempList);
 			}
 		});
-		btnRemovePerson.setBounds(201, 41, 89, 23);
+		btnRemovePerson.setBounds(201, 41, 138, 23);
 		largeInternalPanel.add(btnRemovePerson);
 		
 		txtAddChild = new JTextField();
@@ -207,7 +211,7 @@ public class HomeBankingView extends JFrame
 				childrenList.setViewportView(tempList);
 			}
 		});
-		btnAddChild.setBounds(201, 72, 89, 23);
+		btnAddChild.setBounds(201, 72, 138, 23);
 		largeInternalPanel.add(btnAddChild);
 		
 		JButton btnDeleteChild = new JButton("Delete Child");
@@ -241,7 +245,7 @@ public class HomeBankingView extends JFrame
 				childrenList.setViewportView(tempList);
 			}
 		});
-		btnDeleteChild.setBounds(201, 103, 89, 23);
+		btnDeleteChild.setBounds(201, 103, 138, 23);
 		largeInternalPanel.add(btnDeleteChild);
 		
 		txtAddBank = new JTextField();
@@ -286,7 +290,7 @@ public class HomeBankingView extends JFrame
 				bankList.setViewportView(tempList);
 			}
 		});
-		btnAddBank.setBounds(201, 134, 89, 23);
+		btnAddBank.setBounds(201, 134, 138, 23);
 		largeInternalPanel.add(btnAddBank);
 		
 		JButton btnRemoveBank = new JButton("Delete Bank");
@@ -320,7 +324,7 @@ public class HomeBankingView extends JFrame
 				bankList.setViewportView(tempList);
 			}
 		});
-		btnRemoveBank.setBounds(201, 165, 89, 23);
+		btnRemoveBank.setBounds(201, 165, 138, 23);
 		largeInternalPanel.add(btnRemoveBank);
 		
 		peopleNames = new ArrayList<String>();
@@ -332,7 +336,7 @@ public class HomeBankingView extends JFrame
 		JList tempPeopleList = new JList(peopleNames.toArray());
         tempPeopleList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		peopleList = new JScrollPane(tempPeopleList);
-		peopleList.setBounds(300, 11, 227, 175);
+		peopleList.setBounds(349, 12, 227, 175);
 		largeInternalPanel.add(peopleList);
 		
 		childrenNames = new ArrayList<String>();
@@ -344,7 +348,7 @@ public class HomeBankingView extends JFrame
 		JList tempChildrenList = new JList(childrenNames.toArray());
         tempChildrenList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		childrenList = new JScrollPane(tempChildrenList);
-		childrenList.setBounds(547, 11, 227, 175);
+		childrenList.setBounds(349, 197, 227, 175);
 		largeInternalPanel.add(childrenList);
 		
 		bankNames = new ArrayList<String>();
@@ -356,8 +360,181 @@ public class HomeBankingView extends JFrame
 		JList tempBankList = new JList(bankNames.toArray());
         tempBankList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		bankList = new JScrollPane(tempBankList);
-		bankList.setBounds(784, 11, 227, 175);
+		bankList.setBounds(586, 12, 227, 175);
 		largeInternalPanel.add(bankList);
+		
+		txtAddAccount = new JTextField();
+		txtAddAccount.setText("account to add (bank ownerID accountID)");
+		txtAddAccount.setColumns(10);
+		txtAddAccount.setBounds(10, 197, 181, 20);
+		largeInternalPanel.add(txtAddAccount);
+		
+		txtRemoveAccount = new JTextField();
+		txtRemoveAccount.setText("account to remove (bank accountID)");
+		txtRemoveAccount.setColumns(10);
+		txtRemoveAccount.setBounds(10, 228, 181, 20);
+		largeInternalPanel.add(txtRemoveAccount);
+		
+		JButton btnAddAccount = new JButton("Add Account");
+		btnAddAccount.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String toAdd = txtAddAccount.getText();
+				String[] tokenizedAdd = toAdd.split("\\s+");
+				if(tokenizedAdd.length == 3)
+				{
+					ArrayList<Bank> allBanks = mainController.getBankList();
+					for(int i = 0; i < allBanks.size(); i++)
+					{
+						if(allBanks.get(i).getName().equals(tokenizedAdd[0]))
+						{
+							ArrayList<Person> allPeople = mainController.getPeopleList();
+							for(Person p : allPeople)
+							{
+								if(p.getIdentifier().equals(tokenizedAdd[1]))
+								{
+									allBanks.get(i).
+									addAccount(
+											new Account
+											(p, 
+													tokenizedAdd[2]
+													));
+									txtAddAccount.setText("SUCCESS");
+									//DEBUG
+									System.out.println("Person matched!");
+									break;
+								}
+								else
+								{
+									txtAddAccount.setText("Not a valid person");
+								}
+							}
+							//DEBUG
+							System.out.println("testing for person");
+							break;
+						}
+						else
+						{
+							txtAddAccount.setText("Not a valid bank");
+						}
+					}
+				}
+				else
+				{
+					txtAddAccount.setText("Format: \"bank ownerID accountID\"");
+				}
+				
+				//DEBUG
+				System.out.println(tokenizedAdd.length + " " + tokenizedAdd[0]);
+				
+				accountNames = new ArrayList<String>();
+				int counter = mainController.getBankList().size();
+				for(int j = 0; j < counter; j++)
+				{
+					ArrayList<Bank> allBanks = mainController.getBankList();
+					for(Bank b : allBanks)
+					{
+						ArrayList<Account> allAccounts = b.getAccounts();
+						for(int i = 0; i < allAccounts.size(); i++)
+						{
+							accountNames.add(allAccounts.get(i).getOwner().getFullName() + " " + allAccounts.get(i).getID());
+						}
+					}
+				}
+				JList tempList = new JList(accountNames.toArray());
+
+				accountList.setViewportView(tempList);
+			}
+		});
+		btnAddAccount.setBounds(201, 195, 138, 23);
+		largeInternalPanel.add(btnAddAccount);
+		
+		JButton btnRemoveAccount = new JButton("Delete Account");
+		btnRemoveAccount.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//DEBUG
+				System.out.println("ACTION PERFORMED");
+				//peopleNames.add("TEST");
+				
+				String toAdd = txtRemoveAccount.getText();
+				String[] tokenizedAdd = toAdd.split("\\s+");
+				if(tokenizedAdd.length == 2)
+				{
+					ArrayList<Bank> allBanks = mainController.getBankList();
+					for(Bank b : allBanks)
+					{
+						if(b.getName().equals(tokenizedAdd[0]))
+						{
+							ArrayList<Account> bankAccounts = b.getAccounts();
+							for(Account a : bankAccounts)
+							{
+								if(a.getID().equals(tokenizedAdd[1]))
+								{
+									b.removeAccount(a);
+									txtRemoveAccount.setText("SUCCESS");
+									break;
+								}
+								else
+								{
+									txtRemoveAccount.setText("Not a valid account");
+								}
+							}
+							break;
+						}
+						else
+						{
+							txtRemoveAccount.setText("Not a valid bank");
+						}
+					}
+				}
+				else
+				{
+					txtRemoveAccount.setText("Format: \"bank accountID\"");
+				}
+				
+				//DEBUG
+				System.out.println(tokenizedAdd.length + " " + tokenizedAdd[0]);
+				
+				accountNames = new ArrayList<String>();
+				int counter = mainController.getBankList().size();
+				for(int j = 0; j < counter; j++)
+				{
+					ArrayList<Bank> allBanks = mainController.getBankList();
+					for(Bank b : allBanks)
+					{
+						ArrayList<Account> allAccounts = b.getAccounts();
+						for(Account a : allAccounts)
+						{
+							accountNames.add(a.getOwner().getFullName() + " " + a.getID());
+						}
+					}
+				}
+				JList tempList = new JList(accountNames.toArray());
+
+				accountList.setViewportView(tempList);
+			}
+		});
+		btnRemoveAccount.setBounds(201, 227, 138, 23);
+		largeInternalPanel.add(btnRemoveAccount);
+		
+		accountNames = new ArrayList<String>();
+		int counter4 = mainController.getBankList().size();
+		for(int j = 0; j < counter4; j++)
+		{
+			ArrayList<Bank> allBanks = mainController.getBankList();
+			for(Bank b : allBanks)
+			{
+				ArrayList<Account> allAccounts = b.getAccounts();
+				for(Account a : allAccounts)
+				{
+					accountNames.add(a.getOwner().getFullName());
+				}
+			}
+		}
+		JList tempAccountList = new JList(accountNames.toArray());
+        tempAccountList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		accountList = new JScrollPane(tempAccountList);
+		accountList.setBounds(586, 197, 227, 175);
+		largeInternalPanel.add(accountList);
 	}
 }
 
