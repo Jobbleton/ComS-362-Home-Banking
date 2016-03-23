@@ -1,21 +1,15 @@
 <?xml version="1.0"?>
-<class>
-   <student rollno="393">
-      <firstname>dinkar</firstname>
-      <lastname>kad</lastname>
-      <nickname>dinkar</nickname>
-      <marks>85</marks>
-   </student>
-   <student rollno="493">
-      <firstname>Vaneet</firstname>
-      <lastname>Gupta</lastname>
-      <nickname>vinni</nickname>
-      <marks>95</marks>
-   </student>
-   <student rollno="593">
-      <firstname>jasvir</firstname>
-      <lastname>singn</lastname>
-      <nickname>jazz</nickname>
-      <marks>90</marks>
-   </student>
-</class>
+<root>
+   <person ID="393">
+      <firstname>test</firstname>
+      <lastname>guy</lastname>
+   </person>
+   <person ID="493">
+      <firstname>qrwerqwe</firstname>
+      <lastname>yiouyiou</lastname>
+   </person>
+   <person ID="593">
+      <firstname>xbvcxvbc</firstname>
+      <lastname>sggsfd</lastname>
+   </person>
+</root>

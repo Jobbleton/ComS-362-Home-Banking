@@ -35,7 +35,7 @@ public class HomeBankingController
 			//DEBUG
 			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 			//temporary
-			NodeList nList = doc.getElementsByTagName("student");
+			NodeList nList = doc.getElementsByTagName("person");
 			System.out.println("----------------------------");
 			
 			for (int temp = 0; temp < nList.getLength(); temp++)
@@ -47,8 +47,8 @@ public class HomeBankingController
 				{
 					Element eElement = (Element) nNode;
 					
-					System.out.println("Student roll no : " 
-							+ eElement.getAttribute("rollno"));
+					System.out.println("Person ID : " 
+							+ eElement.getAttribute("ID"));
 					
 					System.out.println("First Name : " 
 							+ eElement
@@ -59,18 +59,6 @@ public class HomeBankingController
 					System.out.println("Last Name : " 
 							+ eElement
 							.getElementsByTagName("lastname")
-							.item(0)
-							.getTextContent());
-					
-					System.out.println("Nick Name : " 
-							+ eElement
-							.getElementsByTagName("nickname")
-							.item(0)
-							.getTextContent());
-					
-					System.out.println("Marks : " 
-							+ eElement
-							.getElementsByTagName("marks")
 							.item(0)
 							.getTextContent());
 				}

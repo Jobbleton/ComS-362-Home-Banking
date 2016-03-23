@@ -188,7 +188,7 @@ public class HomeBankingView extends JFrame
 		
 		//add child label
 		txtAddChild = new JTextField();
-		txtAddChild.setText("child to add (first, second, id)");
+		txtAddChild.setText("child to add (first, second, id, parentID)");
 		txtAddChild.setColumns(10);
 		txtAddChild.setBounds(10, 73, 181, 20);
 		largeInternalPanel.add(txtAddChild);
@@ -211,11 +211,14 @@ public class HomeBankingView extends JFrame
 				//add child
 				String toAdd = txtAddChild.getText();
 				String[] tokenizedAdd = toAdd.split("\\s+");
-				if(tokenizedAdd.length == 3)
+				if(tokenizedAdd.length == 4)
 				{
-					mainController.addChild(new Child(tokenizedAdd[0],tokenizedAdd[1],tokenizedAdd[2]));
+					mainController.addChild(new Child(tokenizedAdd[0],tokenizedAdd[1],tokenizedAdd[2],tokenizedAdd[3]));
 				}
-				
+				else
+				{
+					txtAddChild.setText("Format: \"first, second, id, parentID\"");
+				}
 				//update child list
 				childrenNames = new ArrayList<String>();
 				int counter = mainController.getChildrenList().size();
