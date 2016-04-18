@@ -20,54 +20,6 @@ public class HomeBankingController
 		peopleList = new ArrayList<Person>();
 		childrenList = new ArrayList<Child>();
 		bankList = new ArrayList<Bank>();
-		
-		//DEBUG
-		addPerson(new Person("James", "Test", "1234"));
-		
-		try
-		{	
-			File inputFile = new File("src/initialization.txt");
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			Document doc = dBuilder.parse(inputFile);
-			doc.getDocumentElement().normalize();
-			
-			//DEBUG
-			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
-			//temporary
-			NodeList nList = doc.getElementsByTagName("person");
-			System.out.println("----------------------------");
-			
-			for (int temp = 0; temp < nList.getLength(); temp++)
-			{
-				Node nNode = nList.item(temp);
-				System.out.println("\nCurrent Element :" + nNode.getNodeName());
-				
-				if (nNode.getNodeType() == Node.ELEMENT_NODE)
-				{
-					Element eElement = (Element) nNode;
-					
-					System.out.println("Person ID : " 
-							+ eElement.getAttribute("ID"));
-					
-					System.out.println("First Name : " 
-							+ eElement
-							.getElementsByTagName("firstname")
-							.item(0)
-							.getTextContent());
-					
-					System.out.println("Last Name : " 
-							+ eElement
-							.getElementsByTagName("lastname")
-							.item(0)
-							.getTextContent());
-				}
-			}
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
 	}
 	
 	public ArrayList<Person> getPeopleList()
@@ -85,8 +37,9 @@ public class HomeBankingController
 		return bankList;
 	}
 	
-	public boolean addPerson(Person p)
+	public boolean addPerson(String firstName, String lastName, String ID)
 	{
+		Person p = new Person(firstName, lastName, ID);
 		peopleList.add(p);
 		return true;
 	}
@@ -104,9 +57,10 @@ public class HomeBankingController
 		return false;
 	}
 	
-	public boolean addChild(Child p)
+	public boolean addChild(String firstName, String lastName, String ID, String ParentID)
 	{
-		childrenList.add(p);
+		Child c = new Child(firstName, lastName, ID, ParentID);
+		childrenList.add(c);
 		return true;
 	}
 	
@@ -123,9 +77,10 @@ public class HomeBankingController
 		return false;
 	}
 	
-	public boolean addBank(Bank p)
+	public boolean addBank(String bankName)
 	{
-		bankList.add(p);
+		Bank b = new Bank(bankName);
+		bankList.add(b);
 		return true;
 	}
 	
@@ -139,6 +94,198 @@ public class HomeBankingController
 				return true;
 			}
 		}
+		return false;
+	}
+	
+	//Iteration 2
+	public boolean addDependent(String accID, Child c)
+	{
+		for(Bank b : bankList)
+		{
+			ArrayList<Account> accs = b.getAccounts();
+			for(Account a : accs)
+			{
+				if(a.getID() == accID)
+				{
+					return a.addDependent(c);
+				}
+			}
+		}
+		return false;
+	}
+	
+	public boolean removeDependent(String accID, Child c)
+	{
+		for(Bank b : bankList)
+		{
+			ArrayList<Account> accs = b.getAccounts();
+			for(Account a : accs)
+			{
+				if(a.getID() == accID)
+				{
+					return a.removeDependent(c);
+				}
+			}
+		}
+		return false;
+	}
+	
+	public double getAccountBalance(String accID)
+	{
+		for(Bank b : bankList)
+		{
+			ArrayList<Account> accs = b.getAccounts();
+			for(Account a : accs)
+			{
+				if(a.getID() == accID)
+				{
+					return a.getValue();
+				}
+			}
+		}
+		return 0;
+
+	}
+	
+	public double getTotalFunds(String accID)
+	{
+		for(Bank b : bankList)
+		{
+			ArrayList<Account> accs = b.getAccounts();
+			for(Account a : accs)
+			{
+				if(a.getID() == accID)
+				{
+					return a.getFundsValue();
+				}
+			}
+		}
+		return 0;	
+	}
+	
+	public boolean addBilling(String accID, Billing bill)
+	{
+		for(Bank b : bankList)
+		{
+			ArrayList<Account> accs = b.getAccounts();
+			for(Account a : accs)
+			{
+				if(a.getID() == accID)
+				{
+					return a.addBill(bill);
+				}
+			}
+		}
+		return false;		
+	}
+	
+	public boolean removeBilling(String accID, Billing bill)
+	{
+		for(Bank b : bankList)
+		{
+			ArrayList<Account> accs = b.getAccounts();
+			for(Account a : accs)
+			{
+				if(a.getID() == accID)
+				{
+					return a.removeBill(bill);
+				}
+			}
+		}
+		return false;	
+	}
+	
+	public double getLoanAmount(String accID)
+	{
+		for(Bank b : bankList)
+		{
+			ArrayList<Account> accs = b.getAccounts();
+			for(Account a : accs)
+			{
+				if(a.getID() == accID)
+				{
+					return a.getLoansValue();
+				}
+			}
+		}
+		return 0;	
+	}
+	
+	public boolean addLoan(String accID, Loan l)
+	{
+		for(Bank b : bankList)
+		{
+			ArrayList<Account> accs = b.getAccounts();
+			for(Account a : accs)
+			{
+				if(a.getID() == accID)
+				{
+					return a.addLoan(l);
+				}
+			}
+		}
+		return false;	
+	}
+	
+	public boolean removeLoan(String accID, Loan l)
+	{
+		for(Bank b : bankList)
+		{
+			ArrayList<Account> accs = b.getAccounts();
+			for(Account a : accs)
+			{
+				if(a.getID() == accID)
+				{
+					return a.removeLoan(l);
+				}
+			}
+		}
+		return false;		
+	}
+	
+	//Iteration 3
+	public boolean addAutoBilling()
+	{
+		return false;
+	}
+	
+	public boolean removeAutoBilling()
+	{
+		return false;
+	}
+	
+	public boolean addManualBilling()
+	{
+		return false;
+	}
+	
+	public boolean removeManualBilling()
+	{
+		return false;
+	}
+	
+	public boolean getTransferAmount()
+	{
+		return false;
+	}
+	
+	public boolean updateTransferAmount()
+	{
+		return false;
+	}
+	
+	public boolean getActivity()
+	{
+		return false;
+	}
+	
+	public boolean addAsset()
+	{
+		return false;
+	}
+	
+	public boolean removeAsset()
+	{
 		return false;
 	}
 }

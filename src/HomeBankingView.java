@@ -1,34 +1,27 @@
-import java.awt.Color;
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.Image;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
-import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.FlowLayout;
-import java.awt.BorderLayout;
 import javax.swing.JScrollPane;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.MatteBorder;
-import javax.swing.border.CompoundBorder;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
-import java.awt.Component;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class HomeBankingView extends JFrame
 {
@@ -90,6 +83,46 @@ public class HomeBankingView extends JFrame
 		setContentPane(mainContentPane);
 		mainContentPane.setLayout(new BorderLayout(0, 0));
 		
+		
+		//DEBUG
+		//addPerson(new Person("James", "Test", "1234"));
+		//Initialization of database
+		try
+		{	
+			File inputFile = new File("src/initialization.txt");
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(inputFile);
+			doc.getDocumentElement().normalize();
+			
+			//DEBUG
+			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+			//temporary
+			NodeList nList = doc.getElementsByTagName("person");
+			System.out.println("----------------------------");
+			
+			for (int temp = 0; temp < nList.getLength(); temp++)
+			{
+				Node nNode = nList.item(temp);
+				System.out.println("\nCurrent Element :" + nNode.getNodeName());
+				
+				if (nNode.getNodeType() == Node.ELEMENT_NODE)
+				{
+					Element eElement = (Element) nNode;
+					
+					System.out.println("Person ID : " + eElement.getAttribute("ID"));
+					
+					System.out.println("First Name : " + eElement.getElementsByTagName("firstname").item(0).getTextContent());
+					
+					System.out.println("Last Name : " + eElement.getElementsByTagName("lastname").item(0).getTextContent());
+				}
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
 		//external panel
 		JPanel largeExternalPanel = new JPanel();
 		largeExternalPanel.setBorder(new CompoundBorder());
@@ -128,7 +161,7 @@ public class HomeBankingView extends JFrame
 				String[] tokenizedAdd = toAdd.split("\\s+");
 				if(tokenizedAdd.length == 3)
 				{
-					mainController.addPerson(new Person(tokenizedAdd[0],tokenizedAdd[1],tokenizedAdd[2]));
+					mainController.addPerson(tokenizedAdd[0],tokenizedAdd[1],tokenizedAdd[2]);
 				}
 				
 				//update list
@@ -213,7 +246,7 @@ public class HomeBankingView extends JFrame
 				String[] tokenizedAdd = toAdd.split("\\s+");
 				if(tokenizedAdd.length == 4)
 				{
-					mainController.addChild(new Child(tokenizedAdd[0],tokenizedAdd[1],tokenizedAdd[2],tokenizedAdd[3]));
+					mainController.addChild(tokenizedAdd[0],tokenizedAdd[1],tokenizedAdd[2],tokenizedAdd[3]);
 				}
 				else
 				{
@@ -295,7 +328,7 @@ public class HomeBankingView extends JFrame
 				String[] tokenizedAdd = toAdd.split("\\s+");
 				if(tokenizedAdd.length == 1)
 				{
-					mainController.addBank(new Bank(tokenizedAdd[0]));
+					mainController.addBank(tokenizedAdd[0]);
 				}
 				
 				//DEBUG
