@@ -1,16 +1,16 @@
 
-public class Loan
+public class Asset
 {
 	double value;
 	String name;
 	
-	public Loan()
+	public Asset()
 	{
 		name = "";
 		value = 0;
 	}
 	
-	public Loan(String name, double value)
+	public Asset(String name, double value)
 	{
 		this.name = name;
 		this.value = value;

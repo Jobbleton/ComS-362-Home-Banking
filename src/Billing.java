@@ -1,4 +1,3 @@
-
 public class Billing
 {
 	double value;
@@ -16,8 +15,18 @@ public class Billing
 		this.value = value;
 	}
 	
+	public void setValue(double amt)
+	{
+		value = amt;
+	}
+	
 	public double getValue()
 	{
 		return value;
+	}
+	
+	public String getName()
+	{
+		return name;
 	}
 }

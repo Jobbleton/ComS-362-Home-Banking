@@ -6,4 +6,9 @@ public class Child extends Person
 		super(s1, s2, s3);
 		this.parentID = parentID;
 	}
+	
+	public String getParent()
+	{
+		return parentID;
+	}
 }

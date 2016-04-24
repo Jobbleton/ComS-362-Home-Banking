@@ -83,46 +83,6 @@ public class HomeBankingView extends JFrame
 		setContentPane(mainContentPane);
 		mainContentPane.setLayout(new BorderLayout(0, 0));
 		
-		
-		//DEBUG
-		//addPerson(new Person("James", "Test", "1234"));
-		//Initialization of database
-		try
-		{	
-			File inputFile = new File("src/initialization.txt");
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			Document doc = dBuilder.parse(inputFile);
-			doc.getDocumentElement().normalize();
-			
-			//DEBUG
-			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
-			//temporary
-			NodeList nList = doc.getElementsByTagName("person");
-			System.out.println("----------------------------");
-			
-			for (int temp = 0; temp < nList.getLength(); temp++)
-			{
-				Node nNode = nList.item(temp);
-				System.out.println("\nCurrent Element :" + nNode.getNodeName());
-				
-				if (nNode.getNodeType() == Node.ELEMENT_NODE)
-				{
-					Element eElement = (Element) nNode;
-					
-					System.out.println("Person ID : " + eElement.getAttribute("ID"));
-					
-					System.out.println("First Name : " + eElement.getElementsByTagName("firstname").item(0).getTextContent());
-					
-					System.out.println("Last Name : " + eElement.getElementsByTagName("lastname").item(0).getTextContent());
-				}
-			}
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		
 		//external panel
 		JPanel largeExternalPanel = new JPanel();
 		largeExternalPanel.setBorder(new CompoundBorder());

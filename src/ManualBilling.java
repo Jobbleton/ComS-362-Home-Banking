@@ -20,10 +20,20 @@ public class ManualBilling extends Billing
 		timesBilled = 0;
 	}
 	
+	public void setTimesBilled(int amt)
+	{
+		timesBilled = amt;
+	}
+	
 	public boolean bill()
 	{
 		value += amountToBill;
 		timesBilled++;
 		return true;
+	}
+	
+	public int getTimesBilled()
+	{
+		return timesBilled;
 	}
 }

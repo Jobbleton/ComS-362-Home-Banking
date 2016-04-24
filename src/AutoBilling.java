@@ -21,6 +21,11 @@ public class AutoBilling extends Billing
 		
 	}
 	
+	public void setTimesBilled(int amt)
+	{
+		timesBilled = amt;
+	}
+	
 	public boolean bill()
 	{
 		value += amountToBill;
@@ -31,5 +36,10 @@ public class AutoBilling extends Billing
 	public double getFrequency()
 	{
 		return dailyFrequency;
+	}
+	
+	public int getTimesBilled()
+	{
+		return timesBilled;
 	}
 }

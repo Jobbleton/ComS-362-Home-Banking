@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><root>
+   <person ID="393" fName="Big" lName="Guy">
+   </person>
+   <person ID="493" fName="James" lName="Baxter">
+   </person>
+   <person ID="593" fName="Horatio" lName="Jones">
+   </person>
+   <bank name="First National">
+      <account ID="111" owner="393" transfers="50.0" value="10000.0">
+      	<dependent ID="456">
+      	</dependent>
+      	<dependent ID="678">
+      	</dependent>
+      	<billing name="Window Repair" value="100.0">
+      	</billing>
+      	<autobilling amountToBill="5" dailyFreq="1.5" name="Water" timesbilled="2" value="10.0">
+      	</autobilling>
+      	<manualbilling amountToBill="5" name="Gas" timesbilled="1" value="50.0">
+      	</manualbilling>
+      	<asset name="House" value="100000.0">
+      	</asset>
+      	<loan name="House Loan" value="50000.0">
+      	</loan>
+      	<fund name="Arthur and Mary Hedge Fund" value="12345.0">
+      	</fund>
+      </account>
+   </bank>
+   <child ID="456" fName="Frank" lName="Kiddo" parent="393">
+   </child>
+   <child ID="678" fName="Meggy" lName="Childo" parent="393">
+   </child>
+</root>
