@@ -4,29 +4,9 @@
    <person ID="493" fName="James" lName="Baxter">
    </person>
    <person ID="593" fName="Horatio" lName="Jones">
-   </person>
-   <bank name="First National">
-      <account ID="111" owner="393" transfers="50.0" value="10000.0">
-      	<dependent ID="456">
-      	</dependent>
-      	<dependent ID="678">
-      	</dependent>
-      	<billing name="Window Repair" value="100.0">
-      	</billing>
-      	<autobilling amountToBill="5" dailyFreq="1.5" name="Water" timesbilled="2" value="10.0">
-      	</autobilling>
-      	<manualbilling amountToBill="5" name="Gas" timesbilled="1" value="50.0">
-      	</manualbilling>
-      	<asset name="House" value="100000.0">
-      	</asset>
-      	<loan name="House Loan" value="50000.0">
-      	</loan>
-      	<fund name="Arthur and Mary Hedge Fund" value="12345.0">
-      	</fund>
-      </account>
-   </bank>
+   </person> 
    <child ID="456" fName="Frank" lName="Kiddo" parent="393">
    </child>
    <child ID="678" fName="Meggy" lName="Childo" parent="393">
    </child>
-</root>
+<person ID="333" fName="Biggo" lName="Jibbo"/><person ID="1" fName="Jim" lName="Jam"/><bank name="First_National"><account ID="111" owner="393" transfers="0.0" value="74530.0"><dependent ID="456"/><dependent ID="678"/><billing name="Window Repair" value="100.0"/><billing name="Water" value="10.0"/><billing name="Gas" value="50.0"/><asset name="House" value="100000.0"/><loan name="House Loan" value="50000.0"/><fund name="Arthur and Mary Hedge Fund" value="12345.0"/></account><account ID="1" owner="1" transfers="0.0" value="3.0"><dependent ID="678"/><asset name="bingo" value="3.0"/></account></bank><bank name="Second_Regional"/><person ID="12345" fName="Jones" lName="Smith"/><bank name="James_Fifth_Street"><account ID="1212" owner="12345" transfers="0.0" value="0.0"/></bank></root>

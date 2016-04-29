@@ -96,6 +96,9 @@ public class Database
 					
 					NodeList nAccountList = bankEle.getElementsByTagName("account");
 							
+					//DEBUG
+					//System.out.println("" + nAccountList.getLength() + " " + bID);
+					
 					for(int temp2 = 0; temp2 < nAccountList.getLength(); temp2++)
 					{
 						Node nAccountNode = nAccountList.item(temp2);
@@ -353,7 +356,7 @@ public class Database
 			e.setAttribute("ID", p.getIdentifier());
 			e.setAttribute("fName", p.getFirstName());
 			e.setAttribute("lName", p.getLastName());
-			doc.appendChild(e);			
+			doc.getDocumentElement().appendChild(e);			
 					
 			try
 			{
@@ -442,6 +445,7 @@ public class Database
 	
 	public static boolean removePerson(String ID)
 	{		
+		boolean toReturn = false;
 		try
 		{	
 			File inputFile = new File("src/database.txt");
@@ -463,7 +467,9 @@ public class Database
 					String pID = eElement.getAttribute("ID");					
 					if(pID.equals(ID))
 					{
-						doc.removeChild(nList.item(temp));
+						nNode.getParentNode().removeChild(nNode);
+						toReturn = true;
+						break;
 					}
 				}
 			}
@@ -492,7 +498,7 @@ public class Database
 			//return false;
 		}
 		
-		return false;
+		return toReturn;
 	}
 	
 	public static boolean updatePerson(Person p)
@@ -599,7 +605,7 @@ public class Database
 				eBank.appendChild(eAcc);
 			}
 
-			doc.appendChild(eBank);	
+			doc.getDocumentElement().appendChild(eBank);	
 			
 			try
 			{
@@ -641,6 +647,7 @@ public class Database
 	
 	public static boolean removeBank(String name)
 	{
+		boolean toReturn = false;
 		try
 		{	
 			File inputFile = new File("src/database.txt");
@@ -662,7 +669,9 @@ public class Database
 					String pID = eElement.getAttribute("name");					
 					if(pID.equals(name))
 					{
-						doc.removeChild(nList.item(temp));
+						doc.getDocumentElement().removeChild(nList.item(temp));
+						toReturn = true;
+						break;
 					}
 				}
 			}
@@ -691,7 +700,7 @@ public class Database
 			//return false;
 		}
 		
-		return false;
+		return toReturn;
 	}
 	
 	public static boolean updateBank(Bank b)
@@ -735,7 +744,7 @@ public class Database
 			e.setAttribute("fName", c.getFirstName());
 			e.setAttribute("lName", c.getLastName());
 			e.setAttribute("parent", c.getParent());
-			doc.appendChild(e);			
+			doc.getDocumentElement().appendChild(e);			
 					
 			try
 			{
@@ -778,6 +787,7 @@ public class Database
 	
 	public static boolean removeChild(String ID)
 	{
+		boolean toReturn = false;
 		try
 		{	
 			File inputFile = new File("src/database.txt");
@@ -799,7 +809,9 @@ public class Database
 					String pID = eElement.getAttribute("ID");					
 					if(pID.equals(ID))
 					{
-						doc.removeChild(nList.item(temp));
+						doc.getDocumentElement().removeChild(nList.item(temp));
+						toReturn = true;
+						break;
 					}
 				}
 			}
@@ -828,7 +840,7 @@ public class Database
 			//return false;
 		}
 		
-		return false;
+		return toReturn;
 	}
 	
 	public static boolean updateChild(Child c)

@@ -1,17 +1,4 @@
-import java.io.File;
 import java.util.ArrayList;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 public class HomeBankingController
 {
@@ -54,6 +41,71 @@ public class HomeBankingController
 		return Database.removeChild(id);
 	}
 	
+	public boolean addAccount(String bankName, String ownerID, String accID)
+	{
+		ArrayList<Bank> bankList = getBankList();
+		for(Bank b : bankList)
+		{
+			if(b.getName().equals(bankName))
+			{
+				ArrayList<Person> peopleList = getPeopleList();
+				for(Person p : peopleList)
+				{
+					if(p.getIdentifier().equals(ownerID))
+					{
+						b.addAccount(new Account(p, accID));
+						return Database.updateBank(b);
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	public String checkOwners()
+	{
+		String toReturn = "Owners:\n";
+		ArrayList<Bank> bankList = getBankList();
+		for(Bank b : bankList)
+		{
+			ArrayList<Account> accountList = b.getAccounts();
+			for(Account a : accountList)
+			{
+				ArrayList<Person> peopleList = getPeopleList();
+				for(Person p : peopleList)
+				{
+					if(p.getIdentifier().equals(a.getOwner().getIdentifier()))
+					{
+						toReturn += p.getFullName() + "\n";
+						break;
+					}
+				}
+			}
+		}
+		return toReturn;
+	}
+	
+	public boolean removeAccount(String bankName, String accID)
+	{
+		ArrayList<Bank> bankList = getBankList();
+		for(Bank b : bankList)
+		{
+			if(b.getName().equals(bankName))
+			{
+				ArrayList<Account> accountList = b.getAccounts();
+				for(Account a : accountList)
+				{
+					if(a.getID().equals(accID))
+					{
+						b.removeAccount(a);
+						return Database.updateBank(b);
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
 	public boolean addBank(String bankName)
 	{
 		return Database.addBank(new Bank(bankName));
@@ -65,25 +117,30 @@ public class HomeBankingController
 	}
 	
 	//Iteration 2
-	public boolean addDependent(String accID, Child c)
+	public boolean addDependent(String accID, String cID)
 	{
 		ArrayList<Bank> bankList = getBankList();
 		for(Bank b : bankList)
 		{
-			ArrayList<Account> accs = b.getAccounts();
-			for(Account a : accs)
+			for(Account a : b.getAccounts())
 			{
-				if(a.getID() == accID)
+				if(a.getID().equals(accID))
 				{
-					a.addDependent(c);
-					return Database.updateBank(b);
+					for(Child c : getChildrenList())
+					{
+						if(c.getIdentifier().equals(cID))
+						{
+							a.addDependent(c);
+							return Database.updateBank(b);
+						}
+					}
 				}
 			}
 		}
 		return false;
 	}
 	
-	public boolean removeDependent(String accID, Child c)
+	public boolean removeDependent(String accID, String cID)
 	{
 		ArrayList<Bank> bankList = getBankList();
 		for(Bank b : bankList)
@@ -91,10 +148,18 @@ public class HomeBankingController
 			ArrayList<Account> accs = b.getAccounts();
 			for(Account a : accs)
 			{
-				if(a.getID() == accID)
+				if(a.getID().equals(accID))
 				{
-					a.removeDependent(c);
-					return Database.updateBank(b);
+					ArrayList<Child> children = getChildrenList();
+					for(Child c : children)
+					{
+						if(c.getIdentifier().equals(cID))
+						{
+							a.removeDependent(c);
+							return Database.updateBank(b);
+						}
+
+					}
 				}
 			}
 		}
@@ -109,7 +174,7 @@ public class HomeBankingController
 			ArrayList<Account> accs = b.getAccounts();
 			for(Account a : accs)
 			{
-				if(a.getID() == accID)
+				if(a.getID().equals(accID))
 				{
 					return a.getValue();
 				}
@@ -127,7 +192,7 @@ public class HomeBankingController
 			ArrayList<Account> accs = b.getAccounts();
 			for(Account a : accs)
 			{
-				if(a.getID() == accID)
+				if(a.getID().equals(accID))
 				{
 					return a.getFundsValue();
 				}
@@ -136,7 +201,7 @@ public class HomeBankingController
 		return 0;	
 	}
 	
-	public boolean addBilling(String accID, Billing bill)
+	public boolean addBilling(String accID, String name, Double value)
 	{
 		ArrayList<Bank> bankList = getBankList();
 		for(Bank b : bankList)
@@ -144,17 +209,17 @@ public class HomeBankingController
 			ArrayList<Account> accs = b.getAccounts();
 			for(Account a : accs)
 			{
-				if(a.getID() == accID)
+				if(a.getID().equals(accID))
 				{
-					a.addBill(bill);
-					Database.updateBank(b);
+					a.addBill(new Billing(name, value));
+					return Database.updateBank(b);
 				}
 			}
 		}
 		return false;		
 	}
 	
-	public boolean removeBilling(String accID, Billing bill)
+	public boolean removeBilling(String accID, String name)
 	{
 		ArrayList<Bank> bankList = getBankList();
 		for(Bank b : bankList)
@@ -162,10 +227,10 @@ public class HomeBankingController
 			ArrayList<Account> accs = b.getAccounts();
 			for(Account a : accs)
 			{
-				if(a.getID() == accID)
+				if(a.getID().equals(accID))
 				{
-					a.removeBill(bill);
-					Database.updateBank(b);
+					a.removeBill(new Billing(name, 0));
+					return Database.updateBank(b);
 				}
 			}
 		}
@@ -180,7 +245,7 @@ public class HomeBankingController
 			ArrayList<Account> accs = b.getAccounts();
 			for(Account a : accs)
 			{
-				if(a.getID() == accID)
+				if(a.getID().equals(accID))
 				{
 					return a.getLoansValue();
 				}
@@ -189,7 +254,7 @@ public class HomeBankingController
 		return 0;	
 	}
 	
-	public boolean addLoan(String accID, Loan l)
+	public boolean addLoan(String accID, String name, double value)
 	{
 		ArrayList<Bank> bankList = getBankList();
 		for(Bank b : bankList)
@@ -197,16 +262,17 @@ public class HomeBankingController
 			ArrayList<Account> accs = b.getAccounts();
 			for(Account a : accs)
 			{
-				if(a.getID() == accID)
+				if(a.getID().equals(accID))
 				{
-					return a.addLoan(l);
+					a.addLoan(new Loan(name, value));
+					return Database.updateBank(b);
 				}
 			}
 		}
 		return false;	
 	}
 	
-	public boolean removeLoan(String accID, Loan l)
+	public boolean removeLoan(String accID, String name)
 	{
 		ArrayList<Bank> bankList = getBankList();
 		for(Bank b : bankList)
@@ -214,16 +280,17 @@ public class HomeBankingController
 			ArrayList<Account> accs = b.getAccounts();
 			for(Account a : accs)
 			{
-				if(a.getID() == accID)
+				if(a.getID().equals(accID))
 				{
-					return a.removeLoan(l);
+					a.removeLoan(new Loan(name, 0));
+					return Database.updateBank(b);
 				}
 			}
 		}
 		return false;		
 	}
 	
-	public boolean addAutoBilling(String accID, AutoBilling aB)
+	public boolean addAutoBilling(String accID, String name, double amountToBill, double frequency)
 	{
 		ArrayList<Bank> bankList = getBankList();
 		for(Bank b : bankList)
@@ -231,9 +298,9 @@ public class HomeBankingController
 			ArrayList<Account> accs = b.getAccounts();
 			for(Account a : accs)
 			{
-				if(a.getID() == accID)
+				if(a.getID().equals(accID))
 				{
-					a.addAutoBill(aB);
+					a.addAutoBill(new AutoBilling(name, amountToBill, frequency));
 					return Database.updateBank(b);
 				}
 			}
@@ -241,7 +308,7 @@ public class HomeBankingController
 		return false;	
 	}
 	
-	public boolean removeAutoBilling(String accID, AutoBilling aB)
+	public boolean removeAutoBilling(String accID, String name)
 	{
 		ArrayList<Bank> bankList = getBankList();
 		for(Bank b : bankList)
@@ -249,9 +316,9 @@ public class HomeBankingController
 			ArrayList<Account> accs = b.getAccounts();
 			for(Account a : accs)
 			{
-				if(a.getID() == accID)
+				if(a.getID().equals(accID))
 				{
-					a.removeAutoBill(aB);
+					a.removeAutoBill(new AutoBilling(name, 0, 0));
 					return Database.updateBank(b);
 				}
 			}
@@ -259,7 +326,7 @@ public class HomeBankingController
 		return false;	
 	}
 	
-	public boolean addManualBilling(String accID, ManualBilling aB)
+	public boolean addManualBilling(String accID, String name, double amountToBill)
 	{
 		ArrayList<Bank> bankList = getBankList();
 		for(Bank b : bankList)
@@ -267,9 +334,9 @@ public class HomeBankingController
 			ArrayList<Account> accs = b.getAccounts();
 			for(Account a : accs)
 			{
-				if(a.getID() == accID)
+				if(a.getID().equals(accID))
 				{
-					a.addManBill(aB);
+					a.addManBill(new ManualBilling(name, amountToBill));
 					return Database.updateBank(b);
 				}
 			}
@@ -277,7 +344,7 @@ public class HomeBankingController
 		return false;	
 	}
 	
-	public boolean removeManualBilling(String accID, ManualBilling aB)
+	public boolean removeManualBilling(String accID, String name)
 	{
 		ArrayList<Bank> bankList = getBankList();
 		for(Bank b : bankList)
@@ -285,9 +352,9 @@ public class HomeBankingController
 			ArrayList<Account> accs = b.getAccounts();
 			for(Account a : accs)
 			{
-				if(a.getID() == accID)
+				if(a.getID().equals(accID))
 				{
-					a.removeManBill(aB);
+					a.removeManBill(new ManualBilling(name, 0));
 					return Database.updateBank(b);
 				}
 			}
@@ -303,7 +370,7 @@ public class HomeBankingController
 			ArrayList<Account> accs = b.getAccounts();
 			for(Account a : accs)
 			{
-				if(a.getID() == accID)
+				if(a.getID().equals(accID))
 				{
 					return a.getTransferAmount();
 				}
@@ -320,7 +387,7 @@ public class HomeBankingController
 			ArrayList<Account> accs = b.getAccounts();
 			for(Account a : accs)
 			{
-				if(a.getID() == accID)
+				if(a.getID().equals(accID))
 				{
 					a.updateTransferAmount(amount);
 					return Database.updateBank(b);
@@ -338,20 +405,16 @@ public class HomeBankingController
 			ArrayList<Account> accs = b.getAccounts();
 			for(Account a : accs)
 			{
-				if(a.getID() == accID)
+				if(a.getID().equals(accID))
 				{
-					String toReturn = "";
-					toReturn += "Beginning account activity report..." + "\n";
-					//TODO
-					//toReturn += "" +  + "\n";
-					return toReturn;
+					return a.getActivity();
 				}
 			}
 		}
 		return "No account found.\n";	
 	}
 	
-	public boolean addAsset(String accID, Asset asset)
+	public boolean addAsset(String accID, String name, double val)
 	{
 		ArrayList<Bank> bankList = getBankList();
 		for(Bank b : bankList)
@@ -359,9 +422,9 @@ public class HomeBankingController
 			ArrayList<Account> accs = b.getAccounts();
 			for(Account a : accs)
 			{
-				if(a.getID() == accID)
+				if(a.getID().equals(accID))
 				{
-					a.addAsset(asset);
+					a.addAsset(new Asset(name, val));
 					return Database.updateBank(b);
 				}
 			}
@@ -369,7 +432,7 @@ public class HomeBankingController
 		return false;	
 	}
 	
-	public boolean removeAsset(String accID, Asset asset)
+	public boolean removeAsset(String accID, String name)
 	{
 		ArrayList<Bank> bankList = getBankList();
 		for(Bank b : bankList)
@@ -377,9 +440,9 @@ public class HomeBankingController
 			ArrayList<Account> accs = b.getAccounts();
 			for(Account a : accs)
 			{
-				if(a.getID() == accID)
+				if(a.getID().equals(accID))
 				{
-					a.removeAsset(asset);
+					a.removeAsset(new Asset(name, 0));
 					return Database.updateBank(b);
 				}
 			}
