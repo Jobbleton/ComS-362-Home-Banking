@@ -24,7 +24,6 @@ public class Bank
 	
 	public boolean addAccount(Account toAdd)
 	{
-		//TODO: ERROR HANDLING
 		accounts.add(toAdd);
 		return true;
 	}
